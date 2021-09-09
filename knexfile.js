@@ -4,28 +4,26 @@ const pg = require("pg");
 if (process.env.DATABASE_URL) {
   pg.defaults.ssl = { rejectUnauthorized: false };
 }
-// sharedConfig variables are shared between the development and production environments
-const sharedConfig = {
-  // sets client as pg & sets migrations / seeds directory
-  client: "pg",
-  migrations: { directory: "./db/migrations" },
-  seeds: { directory: "./db/seeds" },
-};
+
 
 module.exports = {
   development: {
-    ...sharedConfig,
-    connnection: {
-      port: 5433,
+    client: "pg",
+    connection: {
+      port: process.env.DB_PORT,
       host: process.env.DB_HOST,
       user: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
     },
+    migrations: { directory: __dirname + "/db/migrations" },
+    seeds: { directory: __dirname + "/db/seeds" },
   },
   production: {
-    ...sharedConfig,
+    client: "pg",
     connection: process.env.DATABASE_URL,
     pool: { min: 2, max: 10 },
+    migrations: { directory: __dirname + "/db/migrations" },
+    seeds: { directory: __dirname + "/db/seeds" },
   },
 };

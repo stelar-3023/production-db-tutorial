@@ -1,25 +1,25 @@
 const profiles = [
   {
-    name: "John"
+    name: "John",
   },
   {
-    name: "Jane"
+    name: "Abigail",
   },
   {
-    name: "Steve"
+    name: "Patty",
   },
   {
-    name: "Dawn"
+    name: "Sally",
   },
   {
-    name: "Sally"
-  }
+    name: "Gary",
+  },
 ];
-exports.seed = function(knex) {
-  // Deletes ALL existing entries
-  return knex('profiles').del()
-    .then(function () {
-      // Inserts seed entries
-      return knex('profiles').insert(profiles);
+
+exports.seed = function (knex) {
+  return knex("profiles")
+    .del()
+    .then(() => {
+      return knex("profiles").insert(profiles);
     });
 };
